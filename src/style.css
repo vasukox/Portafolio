@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a0a0a;
+  --color-paper: #ffffff;
+  --color-cream: #f5f3ee;
+  --color-warm: #1a1816;
+  --color-accent: #c2410c;
+  --color-muted: #6b6b6b;
+  --color-line: #e6e6e6;
+  --color-line-dark: #1a1a1a;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+
+  --tracking-display: -0.04em;
+  --tracking-tight: -0.02em;
+
+  --radius-pill: 9999px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+  .bg-ink ::selection {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    letter-spacing: var(--tracking-display);
+    line-height: 0.88;
+    text-transform: uppercase;
+  }
+  .display-hero {
+    font-size: clamp(56px, 11vw, 148px);
+  }
+  .display-xl {
+    font-size: clamp(72px, 14vw, 200px);
+  }
+  .display-lg {
+    font-size: clamp(56px, 11vw, 150px);
+  }
+  .display-md {
+    font-size: clamp(40px, 6.5vw, 80px);
+  }
+  .display-sm {
+    font-size: clamp(28px, 4vw, 44px);
+  }
+  .label-italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: currentColor;
+    opacity: 0.85;
+  }
+  .label-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.95rem;
+    opacity: 0.7;
+  }
+  .container-x {
+    @apply mx-auto w-full max-w-[1440px] px-6 md:px-10;
+  }
+  .section {
+    @apply w-full overflow-hidden;
+  }
+  .nav-link {
+    @apply relative inline-block text-sm font-medium tracking-tight transition-opacity hover:opacity-60;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .nav-link.is-active {
+    @apply opacity-100;
+  }
+  .nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+  .nav-link:hover::after {
+    transform: scaleX(0.5);
+  }
+  .nav-link.is-active:hover::after {
+    transform: scaleX(1);
+  }
+  .cta-underline {
+    @apply relative inline-block text-sm font-medium tracking-tight;
+  }
+  .cta-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: currentColor;
+  }
+  .input-line {
+    @apply w-full bg-transparent border-b border-current/30 focus:border-current py-3 outline-none transition-colors;
+  }
+  .pill {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-widest border border-current/30 hover:bg-current hover:text-[var(--color-paper)] transition-colors;
+  }
+  .hairline {
+    @apply border-t border-current/15;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1.is-visible { transition-delay: 0.08s; }
+  .reveal-delay-2.is-visible { transition-delay: 0.16s; }
+  .reveal-delay-3.is-visible { transition-delay: 0.24s; }
+  .reveal-delay-4.is-visible { transition-delay: 0.32s; }
+  .reveal-delay-5.is-visible { transition-delay: 0.4s; }
+  .magnetic {
+    display: inline-flex;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+}
+
+.bg-ink {
+  position: relative;
+}
+.has-noise {
+  position: relative;
+  isolation: isolate;
+}
+.has-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.05;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+.has-noise > * {
+  position: relative;
+  z-index: 1;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+  animation: statusPulse 2s ease-out infinite;
+  flex-shrink: 0;
+}
+@keyframes statusPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.word-rotate {
+  position: relative;
+  display: inline-block;
+  min-width: 4ch;
+}
+.word-rotate-track {
+  display: inline-block;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+}
+.word-rotate-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.word-rotate-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.word-rotate-leave {
+  opacity: 0;
+  transform: translateY(-20px);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+@keyframes scrollHint {
+  0%, 100% { transform: scaleY(0.35); opacity: 0.45; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+.scroll-hint-bar {
+  transform-origin: top center;
+  animation: scrollHint 1.6s ease-in-out infinite;
+}
+@keyframes scrollHintText {
+  0%, 100% { opacity: 0.45; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(2px); }
+}
+.scroll-hint-text {
+  animation: scrollHintText 1.6s ease-in-out infinite;
+}
+@keyframes scrollHintArrow {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+.scroll-hint-arrow {
+  animation: scrollHintArrow 1.6s ease-in-out infinite;
+}
