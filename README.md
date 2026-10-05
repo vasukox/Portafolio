@@ -46,7 +46,7 @@ public/
 ## 🛠️ Desarrollo
 
 ```bash
-npm install
+npm ci
 npm run dev      # localhost:5173
 npm run build    # genera dist/
 npm run preview  # preview del build
@@ -59,13 +59,24 @@ npm run preview  # preview del build
 - **Display scale**: clamp() responsive (hero 148px, xl 200px, lg 150px, md 80px, sm 44px)
 - **Secciones alternadas** blanco/negro con grain noise en las oscuras
 
-## 🚢 Deploy
+## 🚢 Producción y seguridad
 
-El proyecto es estático. Cualquiera de:
+Usa Node 22 (`nvm use`), instala con `npm ci` y ejecuta `npm run check`.
+El workflow de GitHub verifica el build y las vulnerabilidades de dependencias en cada push/PR.
 
-- **Vercel / Netlify**: importar repo, build command `npm run build`, output `dist/`
-- **GitHub Pages**: configurar Pages → branch `gh-pages` o workflow
-- **Servidor propio**: subir contenido de `dist/` a cualquier hosting estático
+- **Vercel**: importa el repositorio. `vercel.json` define build, rutas SPA, encabezados y caché.
+- **Netlify**: importa el repositorio. `netlify.toml` y `public/_headers` definen el despliegue.
+- **Otro servidor**: publica solamente `dist/` y adapta los mismos encabezados HTTP y rutas SPA. Los archivos de configuración de Vercel/Netlify no se aplican automáticamente en otros servidores.
+- Sirve mediante HTTPS. `npm run preview` es únicamente una vista previa local; no es un servidor de producción.
+- Los assets con hash en `/assets/` se almacenan durante un año; HTML y archivos públicos se revalidan. No publiques source maps.
+
+La CSP permite scripts solo del propio sitio, bloquea objetos e iframes y limita las fuentes e imágenes a los proveedores usados. Los estilos inline son necesarios para las animaciones Vue; no se permite `unsafe-inline` en scripts ni `unsafe-eval`. No añadas dominios comodín al integrar servicios.
+
+El contacto abre un `mailto:` con los campos codificados y validación HTML. **No existe backend de correo**: el visitante debe enviar el mensaje desde su aplicación. No se confirma una entrega inexistente. Para enviar desde la web hará falta un servicio de correo y validación, límites de frecuencia y protección contra abuso del lado del servidor.
+
+No guardes secretos en el repositorio ni en variables `VITE_*`: todo lo incluido en el frontend es público. `.env*`, claves privadas y metadatos locales de hosting están ignorados. El CV, teléfono, correo y fotos en `public/` son públicos por diseño: revisa su contenido antes de publicar.
+
+Después del despliegue verifica las cabeceras con `curl -I https://TU-DOMINIO/`, las rutas directas, imágenes, enlaces, descarga del CV y apertura del correo. La configuración está preparada; HTTPS, DNS y las cabeceras efectivas deben comprobarse en el hosting elegido.
 
 ## 📝 Licencia
 

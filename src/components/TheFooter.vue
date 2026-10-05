@@ -55,7 +55,7 @@ const social = [
                 :href="link.href"
                 :download="link.download ? '' : undefined"
                 :target="!link.download && link.href.startsWith('http') ? '_blank' : undefined"
-                :rel="!link.download && link.href.startsWith('http') ? 'noopener' : undefined"
+                :rel="!link.download && link.href.startsWith('http') ? 'noopener noreferrer' : undefined"
                 class="text-sm md:text-base cta-underline"
               >
                 {{ link.label }}

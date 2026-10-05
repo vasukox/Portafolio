@@ -6,18 +6,13 @@ import { useReveal } from '../composables/useReveal.js'
 const { el, isVisible } = useReveal({ threshold: 0.15 })
 
 const form = reactive({ name: '', email: '', message: '' })
-const sent = ref(false)
-const sending = ref(false)
+const prepared = ref(false)
 
-const submit = async () => {
-  sending.value = true
-  await new Promise((r) => setTimeout(r, 800))
-  sending.value = false
-  sent.value = true
-  form.name = ''
-  form.email = ''
-  form.message = ''
-  setTimeout(() => (sent.value = false), 3500)
+const submit = () => {
+  const subject = encodeURIComponent(`Contacto desde el portafolio: ${form.name.trim()}`)
+  const body = encodeURIComponent(`Nombre: ${form.name.trim()}\nEmail: ${form.email.trim()}\n\n${form.message.trim()}`)
+  window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
+  prepared.value = true
 }
 </script>
 
@@ -62,13 +57,15 @@ const submit = async () => {
             <form
               class="flex flex-col gap-6 max-w-md"
               @submit.prevent="submit"
-              novalidate
             >
               <div class="grid grid-cols-2 gap-6">
                 <label class="flex flex-col gap-1">
                   <span class="label-italic text-xs">(Tu nombre)</span>
                   <input
                     v-model="form.name"
+                    name="name"
+                    autocomplete="name"
+                    maxlength="100"
                     required
                     type="text"
                     class="input-line text-sm py-3"
@@ -78,6 +75,9 @@ const submit = async () => {
                   <span class="label-italic text-xs">(Tu email)</span>
                   <input
                     v-model="form.email"
+                    name="email"
+                    autocomplete="email"
+                    maxlength="254"
                     required
                     type="email"
                     class="input-line text-sm py-3"
@@ -89,6 +89,8 @@ const submit = async () => {
                 <span class="label-italic text-xs">(Mensaje)</span>
                 <textarea
                   v-model="form.message"
+                  name="message"
+                  maxlength="1500"
                   required
                   rows="4"
                   class="input-line text-sm py-3 resize-none"
@@ -98,13 +100,9 @@ const submit = async () => {
               <div class="flex flex-wrap items-center gap-3">
                 <button
                   type="submit"
-                  :disabled="sending"
                   class="pill text-xs py-3 px-5 disabled:opacity-50"
-                  :class="sent ? 'bg-ink text-paper border-ink' : ''"
                 >
-                  <span v-if="sending">Enviando...</span>
-                  <span v-else-if="sent">¡Enviado! ✓</span>
-                  <span v-else>Enviar mensaje</span>
+                  Preparar correo
                 </button>
                 <a
                   href="/cv-andres-felipe-diaz.pdf"
@@ -114,6 +112,10 @@ const submit = async () => {
                   Descargar CV
                 </a>
               </div>
+
+              <p class="text-sm text-ink/60" role="status" aria-live="polite">
+                {{ prepared ? 'Correo preparado. Debes enviarlo desde tu aplicación de correo; si no se abrió, utiliza el enlace directo.' : 'Se abrirá tu aplicación de correo. El mensaje se envía cuando lo confirmes allí.' }}
+              </p>
 
               <p class="text-sm text-ink/60">
                 ¿Prefieres email directo?

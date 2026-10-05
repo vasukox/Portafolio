@@ -28,3 +28,12 @@ imagenes/
 
 # Vite build cache
 .vite/
+
+# Secrets and deployment metadata
+.env
+.env.*
+!.env.example
+.vercel/
+.netlify/
+*.pem
+*.key

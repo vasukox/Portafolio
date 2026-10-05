@@ -73,7 +73,7 @@ const { el, isVisible } = useReveal({ threshold: 0.15 })
                   <a
                     :href="s.href"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     class="text-base md:text-lg text-paper cta-underline"
                   >
                     {{ s.label }}
