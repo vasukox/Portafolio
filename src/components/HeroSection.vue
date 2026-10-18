@@ -72,7 +72,7 @@ const { el: revealEl, isVisible } = useReveal({ threshold: 0.05 })
             >
               Trabajemos juntos →
             </a>
-            <a href="/cv-andres-felipe-diaz.pdf" download class="pill text-xs py-2.5 px-5">
+            <a :href="profile.cv" download class="pill text-xs py-2.5 px-5">
               Descargar CV
             </a>
             <a href="#proyectos" class="pill text-xs py-2.5 px-5">Ver proyectos</a>

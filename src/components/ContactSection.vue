@@ -6,13 +6,14 @@ import { useReveal } from '../composables/useReveal.js'
 const { el, isVisible } = useReveal({ threshold: 0.15 })
 
 const form = reactive({ name: '', email: '', message: '' })
-const prepared = ref(false)
+const error = ref('')
 
-const submit = () => {
-  const subject = encodeURIComponent(`Contacto desde el portafolio: ${form.name.trim()}`)
-  const body = encodeURIComponent(`Nombre: ${form.name.trim()}\nEmail: ${form.email.trim()}\n\n${form.message.trim()}`)
-  window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
-  prepared.value = true
+const submit = (event) => {
+  error.value = ''
+  if (!form.name.trim() || !form.message.trim()) {
+    event.preventDefault()
+    error.value = 'Escribe tu nombre y un mensaje; los campos no pueden contener solo espacios.'
+  }
 }
 </script>
 
@@ -56,13 +57,18 @@ const submit = () => {
 
             <form
               class="flex flex-col gap-6 max-w-md"
-              @submit.prevent="submit"
+              :action="`https://formsubmit.co/${profile.email}`"
+              method="POST"
+              @submit="submit"
             >
-              <div class="grid grid-cols-2 gap-6">
+              <input type="hidden" name="_subject" value="Nuevo contacto desde el portafolio" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <label class="flex flex-col gap-1">
                   <span class="label-italic text-xs">(Tu nombre)</span>
                   <input
-                    v-model="form.name"
+                    v-model.trim="form.name"
                     name="name"
                     autocomplete="name"
                     maxlength="100"
@@ -74,7 +80,7 @@ const submit = () => {
                 <label class="flex flex-col gap-1">
                   <span class="label-italic text-xs">(Tu email)</span>
                   <input
-                    v-model="form.email"
+                    v-model.trim="form.email"
                     name="email"
                     autocomplete="email"
                     maxlength="254"
@@ -88,7 +94,7 @@ const submit = () => {
               <label class="flex flex-col gap-1">
                 <span class="label-italic text-xs">(Mensaje)</span>
                 <textarea
-                  v-model="form.message"
+                  v-model.trim="form.message"
                   name="message"
                   maxlength="1500"
                   required
@@ -102,10 +108,10 @@ const submit = () => {
                   type="submit"
                   class="pill text-xs py-3 px-5 disabled:opacity-50"
                 >
-                  Preparar correo
+                  Enviar mensaje →
                 </button>
                 <a
-                  href="/cv-andres-felipe-diaz.pdf"
+                  :href="profile.cv"
                   download
                   class="pill text-xs py-3 px-5"
                 >
@@ -114,12 +120,12 @@ const submit = () => {
               </div>
 
               <p class="text-sm text-ink/60" role="status" aria-live="polite">
-                {{ prepared ? 'Correo preparado. Debes enviarlo desde tu aplicación de correo; si no se abrió, utiliza el enlace directo.' : 'Se abrirá tu aplicación de correo. El mensaje se envía cuando lo confirmes allí.' }}
+                {{ error || 'Al enviar, pasarás a FormSubmit para completar la verificación y confirmar el envío.' }}
               </p>
 
               <p class="text-sm text-ink/60">
-                ¿Prefieres email directo?
-                <a :href="`mailto:${profile.email}`" class="cta-underline">
+                Tu nombre, correo y mensaje se procesan mediante FormSubmit para responder a tu consulta. También puedes escribir directamente a
+                <a :href="`mailto:${profile.email}`" class="cta-underline break-all">
                   {{ profile.email }}
                 </a>
               </p>

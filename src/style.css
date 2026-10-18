@@ -129,8 +129,13 @@
     @apply w-full bg-transparent border-b border-current/30 focus:border-current py-3 outline-none transition-colors;
   }
   .pill {
-    @apply inline-flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-widest border border-current/30 hover:bg-current hover:text-[var(--color-paper)] transition-colors;
+    @apply inline-flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-widest border border-current/30 hover:bg-ink hover:text-paper transition-colors;
   }
+  .pill:focus-visible, a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .pill { min-height: 44px; justify-content: center; }
   .hairline {
     @apply border-t border-current/15;
   }

@@ -29,7 +29,7 @@ const metrics = [
         Métricas<br />reales.
       </h2>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6 border-t border-paper/20 pt-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10 lg:gap-6 border-t border-paper/20 pt-12">
         <MetricItem
           v-for="(m, i) in metrics"
           :key="m.label"

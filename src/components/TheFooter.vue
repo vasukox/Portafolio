@@ -12,12 +12,8 @@ const pages = [
   { label: 'Contacto', href: '#contacto' },
 ]
 
-const social = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/andres-felipe-diaz-bernal' },
-  { label: 'GitHub', href: 'https://github.com/vasukox' },
-  { label: 'Email', href: 'mailto:andresfelieodiaz@gmail.com' },
-  { label: 'CV ↓', href: '/cv-andres-felipe-diaz.pdf', download: true },
-]
+const social = [...profile.socials, { label: 'Descargar CV ↓', href: profile.cv, download: true }]
+
 </script>
 
 <template>
@@ -34,7 +30,7 @@ const social = [
           <p class="label-italic">¿Construimos algo?</p>
           <a
             :href="`mailto:${profile.email}`"
-            class="display text-2xl md:text-4xl hover:opacity-70 transition-opacity"
+            class="text-lg sm:text-2xl md:text-3xl font-semibold break-all leading-normal hover:underline"
           >
             {{ profile.email }}
           </a>
@@ -56,7 +52,7 @@ const social = [
                 :download="link.download ? '' : undefined"
                 :target="!link.download && link.href.startsWith('http') ? '_blank' : undefined"
                 :rel="!link.download && link.href.startsWith('http') ? 'noopener noreferrer' : undefined"
-                class="text-sm md:text-base cta-underline"
+                class="text-sm md:text-base cta-underline py-2"
               >
                 {{ link.label }}
               </a>

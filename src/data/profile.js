@@ -17,8 +17,9 @@ export const profile = {
   imageWebp: '/perfil.webp',
   image2xWebp: '/perfil@2x.webp',
   image3xWebp: '/perfil@3x.webp',
+  cv: '/cv-andres-felipe-diaz.pdf',
   socials: [
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/andres-felipe-diaz-bernal' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andres-felipe-d%C3%ADaz-bernal' },
     { label: 'GitHub', href: 'https://github.com/vasukox' },
     { label: 'Email', href: 'mailto:andresfelieodiaz@gmail.com' },
   ],

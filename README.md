@@ -72,7 +72,12 @@ El workflow de GitHub verifica el build y las vulnerabilidades de dependencias e
 
 La CSP permite scripts solo del propio sitio, bloquea objetos e iframes y limita las fuentes e imágenes a los proveedores usados. Los estilos inline son necesarios para las animaciones Vue; no se permite `unsafe-inline` en scripts ni `unsafe-eval`. No añadas dominios comodín al integrar servicios.
 
-El contacto abre un `mailto:` con los campos codificados y validación HTML. **No existe backend de correo**: el visitante debe enviar el mensaje desde su aplicación. No se confirma una entrega inexistente. Para enviar desde la web hará falta un servicio de correo y validación, límites de frecuencia y protección contra abuso del lado del servidor.
+El contacto usa **FormSubmit** (https://formsubmit.co), un servicio gratuito con verificación antispam. No requiere claves ni backend propio. El formulario envía nombre, email y mensaje al servicio; incluye un campo honeypot y conserva el CAPTCHA predeterminado. La CSP permite únicamente ese destino para los formularios.
+
+**Activación necesaria:** desde el sitio desplegado, envía un primer mensaje de prueba. FormSubmit enviará un correo de activación a `andresfelieodiaz@gmail.com` (revisar también spam). Abre el enlace de activación y vuelve a enviar una prueba para comprobar recepción. Hasta activar y verificar, no se puede garantizar la entrega. La confirmación se muestra en FormSubmit; la web no simula un envío exitoso. El visitante también dispone de email directo. Si cambias dominio, revisa si el servicio vuelve a pedir activación.
+
+Los contadores arrancan al entrar en pantalla, no exceden el valor final y respetan movimiento reducido. Los enlaces compartidos se editan en `src/data/profile.js`. No se muestran enlaces de proyectos con destino `#`.
+
 
 No guardes secretos en el repositorio ni en variables `VITE_*`: todo lo incluido en el frontend es público. `.env*`, claves privadas y metadatos locales de hosting están ignorados. El CV, teléfono, correo y fotos en `public/` son públicos por diseño: revisa su contenido antes de publicar.
 

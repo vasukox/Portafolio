@@ -105,7 +105,7 @@ const close = () => (open.value = false)
         </li>
         <li class="ml-2">
           <a
-            href="/cv-andres-felipe-diaz.pdf"
+            :href="profile.cv"
             download
             class="inline-flex items-center text-xs uppercase tracking-widest mr-3 hover:opacity-70 transition-opacity"
             aria-label="Descargar CV en PDF"
@@ -169,7 +169,7 @@ const close = () => (open.value = false)
           </li>
           <li>
             <a
-              href="/cv-andres-felipe-diaz.pdf"
+              :href="profile.cv"
               download
               class="display text-3xl"
               @click="close"

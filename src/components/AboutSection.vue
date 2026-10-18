@@ -48,7 +48,7 @@ const { el, isVisible } = useReveal({ threshold: 0.15 })
             {{ profile.bio }}
           </p>
 
-          <div class="grid grid-cols-2 gap-x-6 gap-y-8 pt-10 border-t border-paper/20">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 pt-10 border-t border-paper/20">
             <div>
               <p class="label-italic mb-2 text-paper/80">(Rol)</p>
               <p class="text-base md:text-lg text-paper">{{ profile.role }}</p>
@@ -72,7 +72,7 @@ const { el, isVisible } = useReveal({ threshold: 0.15 })
                 <li v-for="s in profile.socials" :key="s.label">
                   <a
                     :href="s.href"
-                    target="_blank"
+                    :target="s.href.startsWith('https://') ? '_blank' : undefined"
                     rel="noopener noreferrer"
                     class="text-base md:text-lg text-paper cta-underline"
                   >

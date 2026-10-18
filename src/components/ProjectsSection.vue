@@ -96,8 +96,8 @@ const itemReveals = projects.map(() => useReveal({ threshold: 0.1 }))
           </ul>
 
           <div class="flex flex-wrap gap-5 pt-2">
-            <a :href="p.link" class="cta-underline">Ver proyecto</a>
-            <a :href="p.github" class="cta-underline opacity-70">Código ↗</a>
+            <a v-if="p.link && p.link !== '#'" :href="p.link" class="cta-underline" target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+            <a v-if="p.github && p.github !== '#'" :href="p.github" class="cta-underline" target="_blank" rel="noopener noreferrer">Código ↗</a>
             <span
               v-if="p.featured"
               class="ml-auto inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest px-2 py-1 border border-current/40 rounded-full"
