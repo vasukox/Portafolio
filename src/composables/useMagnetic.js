@@ -4,9 +4,11 @@ export function useMagnetic(strength = 12) {
   const el = ref(null)
   const offset = ref({ x: 0, y: 0 })
 
+  let target = null
+
   const onMove = (e) => {
     if (!el.value) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
     const rect = el.value.getBoundingClientRect()
     const dx = e.clientX - rect.left - rect.width / 2
     const dy = e.clientY - rect.top - rect.height / 2
@@ -22,14 +24,13 @@ export function useMagnetic(strength = 12) {
   }
 
   onMounted(() => {
-    const target = el.value
+    target = el.value
     if (!target) return
     target.addEventListener('mousemove', onMove)
     target.addEventListener('mouseleave', onLeave)
   })
 
   onUnmounted(() => {
-    const target = el.value
     if (!target) return
     target.removeEventListener('mousemove', onMove)
     target.removeEventListener('mouseleave', onLeave)

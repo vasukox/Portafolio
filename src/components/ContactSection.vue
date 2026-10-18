@@ -70,6 +70,7 @@ const submit = (event) => {
                   <input
                     v-model.trim="form.name"
                     name="name"
+                    placeholder="¿Cómo te llamas?"
                     autocomplete="name"
                     maxlength="100"
                     required
@@ -82,6 +83,7 @@ const submit = (event) => {
                   <input
                     v-model.trim="form.email"
                     name="email"
+                    placeholder="tu@correo.com"
                     autocomplete="email"
                     maxlength="254"
                     required
@@ -96,6 +98,7 @@ const submit = (event) => {
                 <textarea
                   v-model.trim="form.message"
                   name="message"
+                  placeholder="Cuéntame qué necesitas y cómo puedo ayudarte…"
                   maxlength="1500"
                   required
                   rows="4"
@@ -106,9 +109,9 @@ const submit = (event) => {
               <div class="flex flex-wrap items-center gap-3">
                 <button
                   type="submit"
-                  class="pill text-xs py-3 px-5 disabled:opacity-50"
+                  class="pill pill-primary text-xs py-3 px-5 disabled:opacity-50"
                 >
-                  Enviar mensaje →
+                  Enviar mensaje <span class="button-arrow" aria-hidden="true">→</span>
                 </button>
                 <a
                   :href="profile.cv"

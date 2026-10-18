@@ -22,6 +22,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 88px;
   }
   body {
     margin: 0;
@@ -98,7 +99,7 @@
     height: 1.5px;
     background: currentColor;
     transform: scaleX(0);
-    transform-origin: center;
+    transform-origin: left;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .nav-link.is-active {
@@ -108,13 +109,14 @@
     transform: scaleX(1);
   }
   .nav-link:hover::after {
-    transform: scaleX(0.5);
+    transform: scaleX(1);
   }
   .nav-link.is-active:hover::after {
     transform: scaleX(1);
   }
   .cta-underline {
     @apply relative inline-block text-sm font-medium tracking-tight;
+    text-underline-offset: 5px;
   }
   .cta-underline::after {
     content: "";
@@ -125,11 +127,45 @@
     height: 1px;
     background: currentColor;
   }
+  .cta-underline::after {
+    transform-origin: left;
+    transition: transform 220ms ease, opacity 220ms ease;
+    opacity: 0.45;
+  }
+  .cta-underline:hover::after, .cta-underline:focus-visible::after {
+    transform: scaleX(0.65);
+    opacity: 1;
+  }
   .input-line {
     @apply w-full bg-transparent border-b border-current/30 focus:border-current py-3 outline-none transition-colors;
   }
   .pill {
-    @apply inline-flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-widest border border-current/30 hover:bg-ink hover:text-paper transition-colors;
+    @apply inline-flex items-center gap-3 px-5 py-3 text-xs uppercase tracking-widest border;
+    --button-bg: var(--color-paper);
+    --button-fg: var(--color-ink);
+    color: var(--button-fg);
+    background: var(--button-bg);
+    border-color: color-mix(in srgb, var(--button-fg) 28%, transparent);
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease, translate 220ms ease;
+  }
+  .pill-primary { --button-bg: var(--color-ink); --button-fg: var(--color-paper); }
+  .pill:hover, .pill:focus-visible {
+    color: var(--button-bg);
+    background: var(--button-fg);
+    border-color: var(--button-fg);
+  }
+  .pill:active { translate: 0 0; box-shadow: none; }
+  .button-arrow { display: inline-block; transition: transform 220ms ease; }
+  .pill:hover .button-arrow { transform: translateX(3px); }
+  .input-line { border-radius: 0; padding-inline: 0.25rem; transition: border-color 220ms ease, background-color 220ms ease; }
+  .input-line:focus { background: var(--color-cream); border-color: var(--color-ink); }
+  .input-line::placeholder { color: var(--color-muted); opacity: 0.7; }
+  @media (hover: hover) and (pointer: fine) {
+    .pill:hover { translate: 0 -2px; box-shadow: 0 5px 0 -2px color-mix(in srgb, var(--color-ink) 16%, transparent); }
+    .pill:active { translate: 0 0; box-shadow: none; }
   }
   .pill:focus-visible, a:focus-visible, button:focus-visible {
     outline: 2px solid var(--color-accent);
@@ -141,11 +177,11 @@
   }
   .reveal {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(18px);
     transition:
-      opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: opacity, transform;
+      opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+
   }
   .reveal.is-visible {
     opacity: 1;
@@ -231,9 +267,11 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
   .reveal { opacity: 1; transform: none; }
+  .pill:hover, .button-arrow, .magnetic { translate: none !important; transform: none !important; }
 }
 
 @keyframes scrollHint {

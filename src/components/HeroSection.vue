@@ -67,10 +67,10 @@ const { el: revealEl, isVisible } = useReveal({ threshold: 0.05 })
             <a
               ref="ctaEl"
               href="#contacto"
-              class="magnetic pill text-xs py-2.5 px-5 bg-ink text-paper border-ink hover:bg-paper hover:text-ink"
+              class="magnetic pill pill-primary text-xs py-2.5 px-5"
               :style="{ transform: `translate(${ctaOffset.x}px, ${ctaOffset.y}px)` }"
             >
-              Trabajemos juntos →
+              Trabajemos juntos <span class="button-arrow" aria-hidden="true">→</span>
             </a>
             <a :href="profile.cv" download class="pill text-xs py-2.5 px-5">
               Descargar CV

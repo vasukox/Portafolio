@@ -14,8 +14,9 @@ const longest = computed(() =>
 let timer = null
 
 onMounted(() => {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (props.words.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   timer = setInterval(() => {
+    if (document.hidden) return
     index.value = (index.value + 1) % props.words.length
   }, props.interval)
 })
@@ -66,12 +67,12 @@ onUnmounted(() => {
 }
 .roll-enter-from {
   opacity: 0;
-  transform: translateY(80%);
-  filter: blur(8px);
+  transform: translateY(45%);
+  filter: blur(2px);
 }
 .roll-leave-to {
   opacity: 0;
-  transform: translateY(-80%);
-  filter: blur(8px);
+  transform: translateY(-45%);
+  filter: blur(2px);
 }
 </style>

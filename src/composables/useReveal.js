@@ -8,7 +8,7 @@ export function useReveal(options = {}) {
 
   onMounted(() => {
     if (!el.value) return
-    if (typeof IntersectionObserver === 'undefined') {
+    if (typeof IntersectionObserver === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       isVisible.value = true
       return
     }
@@ -21,7 +21,7 @@ export function useReveal(options = {}) {
           isVisible.value = false
         }
       },
-      { threshold, rootMargin }
+      { threshold: Math.min(threshold, (window.innerHeight * 0.2) / Math.max(el.value.getBoundingClientRect().height, 1)), rootMargin }
     )
     observer.observe(el.value)
   })
